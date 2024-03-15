@@ -6,6 +6,7 @@
 # ---------------------------------------------------------
 # import required libraries
 import cv2
+import numpy as np
 
 # Read the image
 image = cv2.imread('data/sample.jpg', cv2.IMREAD_GRAYSCALE)
@@ -22,9 +23,15 @@ current_intensity = initial_intensity
 
 def update_intensity(value):
     global current_intensity
-    current_intensity = 2 ** value
+    current_intensity = 2 ** (8-value)
+
+    # Perform image compression
+    img_reduced = np.uint8(np.floor(np.double(image) / (current_intensity)))
+
+    # Normalize the image
+    updated_image = cv2.normalize(img_reduced, None, 0, 255, norm_type=cv2.NORM_MINMAX)
+
     # Update the image intensity
-    updated_image = (image * (current_intensity / max_intensity)).astype('uint8')
     cv2.imshow(window_name, updated_image)
 
 # Create a track bar

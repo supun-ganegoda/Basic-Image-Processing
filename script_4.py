@@ -40,6 +40,7 @@ cv2.imshow('Original Image', image)
 for i, processed_image in enumerate(processed_images):
     window_name = f'Processed Image {block_sizes[i]}x{block_sizes[i]}'
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(window_name, 640, 480)
     cv2.imshow(window_name, processed_image)
 
 # Wait for a key press and close the windows
